@@ -1,0 +1,112 @@
+/* Container principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Botões e links */
+.button-link {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.button-link:hover {
+    background-color: #45a049;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo da tabela */
+#contactsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#contactsTable th, #contactsTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#contactsTable th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#contactsTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#contactsTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Div para permitir rolagem */
+.table-container {
+    max-height: 200px;  /* Limita a altura da div */
+    overflow-y: auto;   /* Adiciona rolagem vertical */
+    margin-top: 20px;
+}
+
+/* Indicador de carregamento */
+#loading {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+}
+
+/* Caixa de texto para mensagem */
+#message {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#messageContainer {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 100px;
+    overflow-y: scroll;
+    background-color: #f9f9f9;
+}
+
+
+/* Estilo de preview de imagem */
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    display: block;
+}

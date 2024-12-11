@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio de Mensagens</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Envio de Mensagens</h2>
+    <a class="button-link" href="/qrcode">QRCODE</a><br>
+
+    <!-- <label for="numbers">Números (separados por quebra de linha):</label>
+    <textarea id="numbers" placeholder="Ex: +5511999999999&#10;+5511888888888"></textarea> -->
+    
+    <div id="loading">Carregando contatos...</div> <!-- Indicador de carregamento -->
+    
+    <table id="contactsTable" style="display:none;"> <!-- Inicialmente oculta -->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Do Not Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Contatos serão inseridos aqui -->
+        </tbody>
+    </table>
+    
+
+    <label for="message">Mensagem:</label>
+    <textarea id="message" placeholder="Digite sua mensagem aqui..."></textarea>
+
+    <input type="file" id="imageInput" accept="image/*" onchange="previewImage()">
+    <div>
+        <img id="imagePreview" class="image-preview" alt="Preview da imagem" style="display: none;">
+    </div>
+
+    <button onclick="sendMessages()">Enviar Mensagens</button>
+</div>
+
+
+<div id="messageContainer"></div>
+
+<script src="./main.js">
+</script>
+
+</body>
+</html>
