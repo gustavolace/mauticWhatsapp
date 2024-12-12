@@ -98,7 +98,8 @@ const headers = {
 router.get('/contacts', async (req, res) => {
     try {
         async function fetchContacts(baseUrl, headers, limit = 2000) {
-            const url = `${baseUrl}?limit=${limit}`;
+            //const url = `${baseUrl}?limit=${limit}`;
+            const url = `${baseUrl}?limit=${limit}&search="gustavo"`;
             console.log(`Fetching contacts with limit=${limit}`); // Log do limite de requisição
 
             try {
@@ -112,6 +113,27 @@ router.get('/contacts', async (req, res) => {
             }
         }
 
+        // Função para formatar o número de telefone
+        function formatPhoneNumber(phone) {
+            // Remove todos os caracteres não numéricos
+            let formatted = phone.replace(/\D/g, '');
+          
+            // Adiciona o DDD 55 se necessário
+            if (!formatted.startsWith('55')) {
+              formatted = '55' + formatted;
+            }
+          
+            const dddLength = 2; // Assumindo que o DDD tenha 2 dígitos
+            const nineIndex = formatted.indexOf('9', dddLength); // Busca o "9" a partir do terceiro dígito
+            if (nineIndex !== -1) {
+                formatted = formatted.slice(0, nineIndex) + formatted.slice(nineIndex + 1);
+            }
+            
+            // Garante que o número tenha no máximo 12 dígitos
+            formatted = formatted.slice(0, 12);
+            return formatted;
+          }
+
         // Buscar contatos com limite elevado
         const contacts = await fetchContacts(`${MAUTIC_BASE_URL}/api/contacts`, headers);
 
@@ -121,11 +143,14 @@ router.get('/contacts', async (req, res) => {
                 const contactFields = contact.fields ? contact.fields.core : {};
                 const id = contact.id;
                 const firstname = contactFields.firstname ? contactFields.firstname.value : 'N/A';
-                const mobile = contactFields.mobile ? contactFields.mobile.value : null;
+                let mobile = contactFields.mobile ? contactFields.mobile.value : null;
                 const doNotContact = contact.doNotContact && contact.doNotContact.length > 0 ? 'Yes' : 'No';
 
-                // Retorna o contato apenas se o mobile não for nulo
+                // Formatar o número de telefone se existir
                 if (mobile) {
+                    mobile = formatPhoneNumber(mobile);
+
+                    // Retorna o contato apenas se o mobile for válido
                     return {
                         ID: id,
                         Name: firstname,
@@ -147,15 +172,20 @@ router.get('/contacts', async (req, res) => {
     }
 });
 
+
+
+
 router.post("/send-message", upload.single('image'), async (req, res) => {
 
-    if (!isClientReady) {
+    /* if (!isClientReady) {
         return res.status(503).send('Cliente ainda não está pronto.');
     }
-
+ */
     const { numbers, message } = req.body;
-    const numberArray = JSON.parse(numbers);
+    console.log(numbers)
     const image = req.file
+    console.log(image)
+    console.log(message)
 
     if (!numbers || !message) {
         messages.push("Números e mensagem são necessários.")
@@ -181,7 +211,7 @@ router.post("/send-message", upload.single('image'), async (req, res) => {
     const errors = [];
 
 
-    for (const number of numberArray) {
+/*     for (const number of numberArray) {
         try {
             // Se uma imagem foi enviada, você pode processá-la aqui
             if (image) {
@@ -206,7 +236,7 @@ router.post("/send-message", upload.single('image'), async (req, res) => {
         res.status(500).send({ results, errors });
     } else {
         res.status(200).send(results);
-    }
+    } */
 });
 
 

@@ -56,22 +56,35 @@ function previewImage() {
 }
 
 function sendMessages() {
-    const numbers = document.getElementById('numbers').value.split('\n').filter(n => n.trim() !== '');
+    const formData = new FormData();
+
+    //const numbers = document.getElementById('numbers').value.split('\n').filter(n => n.trim() !== '');
+    const tableBody = document.getElementById('contactsTable').getElementsByTagName('tbody')[0];
+    for (const row of tableBody.children) {
+        // Get the mobile number cell
+        const mobileCell = row.querySelector('td:nth-child(3)'); // Selects the third cell (assuming mobile number is in the 3rd column)
+        if (mobileCell) {
+            const mobileNumber = mobileCell.textContent.trim(); // Get the text content and trim spaces
+            
+            // You can add additional data from other cells if needed
+            // const contactName = row.querySelector('td:nth-child(2)').textContent.trim(); // Example getting name from 2nd column
+            
+            // Create an object to represent the contact data (optional)
+            // const contact = { mobile: mobileNumber, name: contactName }; // Example with name
+            console.log(mobileNumber)
+            formData.append('numbers[]', mobileNumber); // Add mobile number to the formData
+            // formData.append('contacts[]', JSON.stringify(contact)); // Example adding contact object (optional)
+          }
+    }
+
     const message = document.getElementById('message').value;
     const imageSrc = document.getElementById('imagePreview').src;
 
-    if (numbers.length === 0 || message.trim() === '') {
-        alert("Por favor, insira os números e a mensagem.");
-        return;
-    }
 
-    console.log("Números:", numbers);
     console.log("Mensagem:", message);
     console.log("Imagem:", imageSrc ? imageSrc : "Nenhuma imagem inserida.");
 
-    // Preparar os dados para envio
-    const formData = new FormData();
-    formData.append('numbers', JSON.stringify(numbers));
+    //formData.append('numbers', JSON.stringify(numbers));
     formData.append('message', message);
 
     if (imageSrc && imageSrc.startsWith('data:image/')) {
